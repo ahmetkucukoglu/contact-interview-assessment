@@ -2,7 +2,7 @@ namespace ContactApp.Shared.Abstractions.DDD;
 
 public abstract class Entity<TKey>
 {
-    public TKey Id { get; }
+    public TKey Id { get; protected set; }
 
     public override bool Equals(object? obj)
     {
