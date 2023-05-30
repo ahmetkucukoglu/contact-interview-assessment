@@ -1,3 +1,4 @@
+using ContactApp.Company.Domain.Aggregates;
 using ContactApp.Company.Domain.Repositories;
 using ContactApp.Company.Infrastructure.MongoDb;
 using Microsoft.Extensions.Options;
@@ -20,5 +21,13 @@ public class CompanyRepository : ICompanyRepository
     public async Task Create(Domain.Aggregates.Company company, CancellationToken cancellationToken)
     {
         await _collection.InsertOneAsync(company, cancellationToken: cancellationToken);
+    }
+
+    public async Task<Domain.Aggregates.Company> Get(CompanyId id, CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Company>.Filter.Eq(c => c.Id, id);
+        var cursor = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
+
+        return await cursor.FirstOrDefaultAsync(cancellationToken);
     }
 }

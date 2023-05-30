@@ -7,6 +7,8 @@ public class E2ETestsFixture : IDisposable
 {
     private readonly Application _application;
     public readonly HttpClient HttpClient;
+
+    public Guid CompanyId { get; set; }
     
     public E2ETestsFixture()
     {
