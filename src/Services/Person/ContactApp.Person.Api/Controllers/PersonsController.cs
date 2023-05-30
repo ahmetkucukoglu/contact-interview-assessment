@@ -3,6 +3,7 @@ using ContactApp.Person.Application.Commands.CreatePerson;
 using ContactApp.Person.Application.Commands.DeletePerson;
 using ContactApp.Person.Application.Commands.RemoveContact;
 using ContactApp.Person.Application.Queries.GetPerson;
+using ContactApp.Person.Application.Queries.GetPersons;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ public class PersonsController : ControllerBase
 
         return response;
     }
-    
+
     [HttpGet("{id:guid}")]
     public async Task<GetPersonResponse> Get([FromRoute] GetPerson request, CancellationToken cancellationToken)
     {
@@ -34,7 +35,15 @@ public class PersonsController : ControllerBase
 
         return response;
     }
-    
+
+    [HttpGet]
+    public async Task<GetPersonsResponse> Get([FromQuery] GetPersons request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(request, cancellationToken);
+
+        return response;
+    }
+
     [HttpDelete("{id:guid}")]
     public async Task<DeletePersonResponse> Delete([FromRoute] DeletePerson request,
         CancellationToken cancellationToken)

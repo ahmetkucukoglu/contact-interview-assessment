@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
 using ContactApp.Person.Application.Queries.GetPerson;
+using ContactApp.Person.Application.Queries.GetPersons;
 using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Shared.Middlewares;
 using Xunit.Priority;
@@ -109,8 +110,23 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
                 Assert.Equal("5413456787", contact.Value);
             });
     }
-
+    
     [Fact, Priority(5)]
+    public async void Should_ReturnPersons_When_GetPersons()
+    {
+        var response = await _fixture.HttpClient.GetFromJsonAsync<GetPersonsResponse>("api/Persons");
+
+        Assert.NotNull(response);
+        Assert.Equal(1, response.Count);
+        Assert.Collection(response.Persons, data =>
+        {
+            Assert.Equal(_fixture.Data.PersonId, data.Id);
+            Assert.Equal(_fixture.Data.FirstName, data.FirstName);
+            Assert.Equal(_fixture.Data.LastName, data.LastName);
+        });
+    }
+
+    [Fact, Priority(6)]
     public async void Should_ReturnSuccess_When_DeletePerson()
     {
         var responseMessage =

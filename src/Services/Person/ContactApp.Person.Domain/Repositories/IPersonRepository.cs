@@ -9,4 +9,6 @@ public interface IPersonRepository
     public Task Delete(Aggregates.Person person, CancellationToken cancellationToken);
     public Task AddContacts(Aggregates.Person person, CancellationToken cancellationToken);
     public Task RemoveContacts(Aggregates.Person person, CancellationToken cancellationToken);
+    public Task<(int Count, List<Domain.Aggregates.Person>)> GetAll(int page, int size,
+        CancellationToken cancellationToken);
 }

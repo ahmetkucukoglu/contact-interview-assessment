@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Person.Domain.Repositories;
 using ContactApp.Person.Infrastructure.MongoDb;
@@ -27,7 +28,7 @@ public class PersonRepository : IPersonRepository
     {
         var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, id) &
                      Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.IsDeleted, false);
-        
+
         var cursor = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
 
         return await cursor.FirstOrDefaultAsync(cancellationToken);
@@ -72,5 +73,23 @@ public class PersonRepository : IPersonRepository
         }
 
         await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+    }
+
+    public async Task<(int Count, List<Domain.Aggregates.Person>)> GetAll(int page, int size,
+        CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.IsDeleted, false);
+
+        var count = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+        var skip = page == 1 ? 0 : (page - 1) * size;
+
+        var cursor = await _collection.FindAsync(filter, new FindOptions<Domain.Aggregates.Person>
+        {
+            Sort = Builders<Domain.Aggregates.Person>.Sort.Ascending(p => p.FirstName).Ascending(p => p.LastName),
+            Skip = skip,
+            Limit = size
+        }, cancellationToken: cancellationToken);
+
+        return ((int)count, await cursor.ToListAsync(cancellationToken));
     }
 }
