@@ -30,4 +30,12 @@ public class CompanyRepository : ICompanyRepository
 
         return await cursor.FirstOrDefaultAsync(cancellationToken);
     }
+
+    public async Task<List<Domain.Aggregates.Company>> GetAll(CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Company>.Filter.Empty;
+        var cursor = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
+
+        return await cursor.ToListAsync(cancellationToken);
+    }
 }

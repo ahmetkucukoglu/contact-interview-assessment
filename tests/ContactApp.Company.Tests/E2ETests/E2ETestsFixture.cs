@@ -8,8 +8,8 @@ public class E2ETestsFixture : IDisposable
     private readonly Application _application;
     public readonly HttpClient HttpClient;
 
-    public Guid CompanyId { get; set; }
-    
+    public E2ETestFixtureData Data { get; set; } = new();
+
     public E2ETestsFixture()
     {
         _application = new Application();
