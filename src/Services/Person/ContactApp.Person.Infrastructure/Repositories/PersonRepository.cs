@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Person.Domain.Repositories;
 using ContactApp.Person.Infrastructure.MongoDb;
@@ -50,12 +49,8 @@ public class PersonRepository : IPersonRepository
         var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, person.Id);
 
         var update = Builders<Domain.Aggregates.Person>.Update
-            .Set(p => p.ModifiedAt, DateTimeOffset.Now);
-
-        foreach (var contact in person.GetAddedNewContacts())
-        {
-            update = update.Push("Contacts", contact);
-        }
+            .Set(p => p.ModifiedAt, DateTimeOffset.Now)
+            .PushEach("Contacts", person.GetAddedNewContacts());
 
         await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }
@@ -90,6 +85,6 @@ public class PersonRepository : IPersonRepository
             Limit = size
         }, cancellationToken: cancellationToken);
 
-        return ((int)count, await cursor.ToListAsync(cancellationToken));
+        return ((int) count, await cursor.ToListAsync(cancellationToken));
     }
 }
