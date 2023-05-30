@@ -6,4 +6,5 @@ public class E2ETestFixtureData
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public Guid CompanyId { get; set; }
+    public Guid? ContactId { get; set; }
 }

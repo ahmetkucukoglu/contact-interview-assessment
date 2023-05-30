@@ -45,4 +45,19 @@ public class PersonRepository : IPersonRepository
 
         await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }
+
+    public async Task RemoveContacts(Domain.Aggregates.Person person, CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, person.Id);
+
+        var update = Builders<Domain.Aggregates.Person>.Update
+            .Set(p => p.ModifiedAt, DateTimeOffset.Now);
+
+        foreach (var contact in person.GetRemovedNewContacts())
+        {
+            update = update.PullFilter("Contacts", Builders<Contact>.Filter.Eq(b => b.Id, contact.Id));
+        }
+
+        await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+    }
 }

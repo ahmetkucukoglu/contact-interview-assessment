@@ -1,5 +1,6 @@
 using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
+using ContactApp.Person.Application.Commands.RemoveContact;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,18 @@ public class PersonsController : ControllerBase
 
         return response;
     }
-    
+
     [HttpPut("{id:guid}/contacts")]
     public async Task<AddContactResponse> AddContact(AddContact request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(request, cancellationToken);
+
+        return response;
+    }
+
+    [HttpDelete("{personId:guid}/contacts/{id:guid}")]
+    public async Task<RemoveContactResponse> RemoveContact([FromRoute] RemoveContact request,
+        CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
 

@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
+using ContactApp.Person.Application.Commands.RemoveContact;
 using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Shared.Middlewares;
 using Xunit.Priority;
@@ -56,8 +57,8 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
     }
 
     [Theory, Priority(2)]
-    //[InlineData(ContactTypes.EmailAddress, "ahmetkucukoglu@gmail.com")]
-    //[InlineData(ContactTypes.PhoneNumber, "5413456787")]
+    [InlineData(ContactTypes.EmailAddress, "ahmetkucukoglu@gmail.com")]
+    [InlineData(ContactTypes.PhoneNumber, "5413456787")]
     [InlineData(ContactTypes.Location, "İstanbul")]
     public async void Should_ReturnSuccess_When_AddContact(ContactTypes type, string value)
     {
@@ -67,10 +68,22 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
             Type = type,
             Value = value
         };
-        var responseMessage = await _fixture.HttpClient.PutAsJsonAsync($"api/Persons/{_fixture.Data.PersonId}/contacts", request);
+        var responseMessage =
+            await _fixture.HttpClient.PutAsJsonAsync($"api/Persons/{_fixture.Data.PersonId}/contacts", request);
 
         responseMessage.EnsureSuccessStatusCode();
 
         var response = await responseMessage.Content.ReadFromJsonAsync<AddContactResponse>();
+        _fixture.Data.ContactId = response!.Id;
+    }
+
+    [Fact, Priority(3)]
+    public async void Should_ReturnSuccess_When_RemoveContact()
+    {
+        var responseMessage =
+            await _fixture.HttpClient.DeleteAsync(
+                $"api/Persons/{_fixture.Data.PersonId}/contacts/{_fixture.Data.ContactId!.Value}");
+
+        responseMessage.EnsureSuccessStatusCode();
     }
 }

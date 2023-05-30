@@ -12,6 +12,7 @@ public class Person : AggregateRoot<PersonId>
     private List<Contact> Contacts = new();
 
     private List<Contact> AddedNewContacts = new();
+    private List<Contact> RemovedNewContacts = new();
 
     public Person(string firstName, string lastName, CompanyId companyId)
     {
@@ -27,16 +28,36 @@ public class Person : AggregateRoot<PersonId>
     public void AddContact(Contact contact)
     {
         Contacts.Add(contact);
-        
+
         AddNewContact(contact);
     }
 
     private void AddNewContact(Contact contact)
     {
         if (AddedNewContacts == null) AddedNewContacts = new();
-        
+
         AddedNewContacts.Add(contact);
     }
 
-    public ReadOnlyCollection<Contact> GetAddedNewContacts() => Contacts.AsReadOnly();
+    public void RemoveContact(Guid id)
+    {
+        var contact = Contacts.FirstOrDefault(i => i.Id == id);
+
+        if (contact == null)
+            throw new DomainException("Contact not found");
+
+        Contacts.Remove(contact);
+
+        AddNewRemoveContact(contact);
+    }
+
+    private void AddNewRemoveContact(Contact contact)
+    {
+        if (RemovedNewContacts == null) RemovedNewContacts = new();
+
+        RemovedNewContacts.Add(contact);
+    }
+
+    public ReadOnlyCollection<Contact> GetAddedNewContacts() => AddedNewContacts.AsReadOnly();
+    public ReadOnlyCollection<Contact> GetRemovedNewContacts() => RemovedNewContacts.AsReadOnly();
 }
