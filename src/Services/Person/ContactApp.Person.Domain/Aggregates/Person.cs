@@ -65,4 +65,5 @@ public class Person : AggregateRoot<PersonId>
 
     public ReadOnlyCollection<Contact> GetAddedNewContacts() => AddedNewContacts.AsReadOnly();
     public ReadOnlyCollection<Contact> GetRemovedNewContacts() => RemovedNewContacts.AsReadOnly();
+    public ReadOnlyCollection<Contact> GetContacts() => Contacts.AsReadOnly();
 }

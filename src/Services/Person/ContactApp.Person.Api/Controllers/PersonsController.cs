@@ -2,6 +2,7 @@ using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
 using ContactApp.Person.Application.Commands.DeletePerson;
 using ContactApp.Person.Application.Commands.RemoveContact;
+using ContactApp.Person.Application.Queries.GetPerson;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,14 @@ public class PersonsController : ControllerBase
 
     [HttpPost]
     public async Task<CreatePersonResponse> Create(CreatePerson request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(request, cancellationToken);
+
+        return response;
+    }
+    
+    [HttpGet("{id:guid}")]
+    public async Task<GetPersonResponse> Get([FromRoute] GetPerson request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
 
