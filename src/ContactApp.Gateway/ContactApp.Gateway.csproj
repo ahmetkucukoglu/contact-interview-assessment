@@ -9,23 +9,15 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
+        <PackageReference Include="Refit" Version="6.3.2" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
+      <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\ContactApp.Shared\ContactApp.Shared.csproj" />
-      <ProjectReference Include="..\ContactApp.Company.Application\ContactApp.Company.Application.csproj" />
-      <ProjectReference Include="..\ContactApp.Company.Infrastructure\ContactApp.Company.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="ContactApp.Company.Tests" />
     </ItemGroup>
 
     <ItemGroup>

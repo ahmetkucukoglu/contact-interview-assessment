@@ -26,15 +26,15 @@ public class CompaniesController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<GetCompanyResponse> Get([FromRoute]GetCompany request, CancellationToken cancellationToken)
+    public async Task<GetCompanyResponse> Get([FromRoute] GetCompany request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
 
         return response;
     }
-    
+
     [HttpGet]
-    public async Task<GetCompaniesResponse> Get([FromQuery]GetCompanies request, CancellationToken cancellationToken)
+    public async Task<GetCompaniesResponse> Get([FromQuery] GetCompanies request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
 

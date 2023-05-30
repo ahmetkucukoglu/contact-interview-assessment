@@ -1,9 +1,7 @@
-using ContactApp.Company.Application;
-using ContactApp.Company.Infrastructure;
-using ContactApp.Shared;
-using ContactApp.Shared.Middlewares;
+using ContactApp.Gateway.Middlewares;
+using ContactApp.Gateway.Services.Company;
 
-namespace ContactApp.Company.Api;
+namespace ContactApp.Gateway;
 
 public static class ServiceCollectionExtensions
 {
@@ -15,11 +13,9 @@ public static class ServiceCollectionExtensions
         {
             o.DescribeAllParametersInCamelCase();
         });
-        serviceCollection.AddGlobalExceptionHandler();
-
-        serviceCollection
-            .AddInfrastructure(configuration)
-            .AddApplication();
+        serviceCollection.AddApiExceptionHandler();
+        
+        serviceCollection.AddCompanies(configuration);
     }
     
     public static void UseApi(this WebApplication app)
@@ -30,7 +26,7 @@ public static class ServiceCollectionExtensions
             app.UseSwaggerUI();
         }
 
-        app.UseGlobalExceptionHandler();
+        app.UseApiExceptionHandler();
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();

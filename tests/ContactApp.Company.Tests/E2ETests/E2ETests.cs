@@ -29,7 +29,7 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
         responseMessage.EnsureSuccessStatusCode();
 
         var response = await responseMessage.Content.ReadFromJsonAsync<CreateCompanyResponse>();
-        _fixture.Data.CompanyId = response.Id;
+        _fixture.Data.CompanyId = response!.Id;
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
         var response = await responseMessage.Content.ReadFromJsonAsync<ApiErrorResponse>();
 
         Assert.Equal(HttpStatusCode.InternalServerError, responseMessage.StatusCode);
-        Assert.Single(response.Errors);
+        Assert.Single(response!.Errors);
     }
 
     [Fact, Priority(2)]
