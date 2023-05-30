@@ -6,6 +6,7 @@ public interface IPersonRepository
 {
     public Task Create(Aggregates.Person person, CancellationToken cancellationToken);
     public Task<Aggregates.Person> Get(PersonId id, CancellationToken cancellationToken);
+    public Task Delete(Aggregates.Person person, CancellationToken cancellationToken);
     public Task AddContacts(Aggregates.Person person, CancellationToken cancellationToken);
     public Task RemoveContacts(Aggregates.Person person, CancellationToken cancellationToken);
 }

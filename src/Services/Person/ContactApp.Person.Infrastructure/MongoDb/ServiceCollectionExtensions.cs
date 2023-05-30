@@ -21,7 +21,6 @@ public static class ServiceCollectionExtensions
         {
             map.AutoMap();
             map.MapField("Contacts");
-            map.UnmapField("AddedNewContacts");
         });
 
         return serviceCollection;

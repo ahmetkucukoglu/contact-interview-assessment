@@ -25,10 +25,23 @@ public class PersonRepository : IPersonRepository
 
     public async Task<Domain.Aggregates.Person> Get(PersonId id, CancellationToken cancellationToken)
     {
-        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, id);
+        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, id) &
+                     Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.IsDeleted, false);
+        
         var cursor = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
 
         return await cursor.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task Delete(Domain.Aggregates.Person person, CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, person.Id);
+
+        var update = Builders<Domain.Aggregates.Person>.Update
+            .Set(p => p.ModifiedAt, DateTimeOffset.Now)
+            .Set(p => p.IsDeleted, person.IsDeleted);
+
+        await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }
 
     public async Task AddContacts(Domain.Aggregates.Person person, CancellationToken cancellationToken)

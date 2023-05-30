@@ -25,6 +25,11 @@ public class Person : AggregateRoot<PersonId>
         LastName = lastName;
     }
 
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
+
     public void AddContact(Contact contact)
     {
         Contacts.Add(contact);

@@ -2,7 +2,6 @@ using System.Net;
 using System.Net.Http.Json;
 using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
-using ContactApp.Person.Application.Commands.RemoveContact;
 using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Shared.Middlewares;
 using Xunit.Priority;
@@ -83,6 +82,16 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
         var responseMessage =
             await _fixture.HttpClient.DeleteAsync(
                 $"api/Persons/{_fixture.Data.PersonId}/contacts/{_fixture.Data.ContactId!.Value}");
+
+        responseMessage.EnsureSuccessStatusCode();
+    }
+
+    [Fact, Priority(4)]
+    public async void Should_ReturnSuccess_When_DeletePerson()
+    {
+        var responseMessage =
+            await _fixture.HttpClient.DeleteAsync(
+                $"api/Persons/{_fixture.Data.PersonId}");
 
         responseMessage.EnsureSuccessStatusCode();
     }
