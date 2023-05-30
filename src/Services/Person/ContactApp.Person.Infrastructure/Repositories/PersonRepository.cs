@@ -1,3 +1,4 @@
+using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Person.Domain.Repositories;
 using ContactApp.Person.Infrastructure.MongoDb;
 using Microsoft.Extensions.Options;
@@ -20,5 +21,28 @@ public class PersonRepository : IPersonRepository
     public async Task Create(Domain.Aggregates.Person person, CancellationToken cancellationToken)
     {
         await _collection.InsertOneAsync(person, cancellationToken: cancellationToken);
+    }
+
+    public async Task<Domain.Aggregates.Person> Get(PersonId id, CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, id);
+        var cursor = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
+
+        return await cursor.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task AddContacts(Domain.Aggregates.Person person, CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Person>.Filter.Eq(p => p.Id, person.Id);
+
+        var update = Builders<Domain.Aggregates.Person>.Update
+            .Set(p => p.ModifiedAt, DateTimeOffset.Now);
+
+        foreach (var contact in person.GetAddedNewContacts())
+        {
+            update = update.Push("Contacts", contact);
+        }
+
+        await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }
 }

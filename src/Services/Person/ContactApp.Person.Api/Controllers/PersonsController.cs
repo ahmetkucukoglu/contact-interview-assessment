@@ -1,3 +1,4 @@
+using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,14 @@ public class PersonsController : ControllerBase
 
     [HttpPost]
     public async Task<CreatePersonResponse> Create(CreatePerson request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(request, cancellationToken);
+
+        return response;
+    }
+    
+    [HttpPut("{id:guid}/contacts")]
+    public async Task<AddContactResponse> AddContact(AddContact request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
 

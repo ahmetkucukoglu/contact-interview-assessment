@@ -14,9 +14,15 @@ public static class ServiceCollectionExtensions
 
         BsonSerializer.RegisterSerializer(new PersonIdSerializer(stringSerializer));
         BsonSerializer.RegisterSerializer(new CompanyIdSerializer(stringSerializer));
+        BsonSerializer.RegisterSerializer(new GuidSerializer(stringSerializer));
         BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(stringSerializer));
         
-        BsonClassMap.RegisterClassMap<Domain.Aggregates.Person>(map => map.AutoMap());
+        BsonClassMap.RegisterClassMap<Domain.Aggregates.Person>(map =>
+        {
+            map.AutoMap();
+            map.MapField("Contacts");
+            map.UnmapField("AddedNewContacts");
+        });
 
         return serviceCollection;
     }

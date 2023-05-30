@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Http.Json;
+using ContactApp.Person.Application.Commands.AddContact;
 using ContactApp.Person.Application.Commands.CreatePerson;
+using ContactApp.Person.Domain.Aggregates;
 using ContactApp.Shared.Middlewares;
 using Xunit.Priority;
 
@@ -17,7 +19,7 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
     }
 
     [Fact, Priority(1)]
-    public async void Should_ReturnSuccess_When_CreateCompany()
+    public async void Should_ReturnSuccess_When_CreatePerson()
     {
         _fixture.Data.FirstName = "Ahmet";
         _fixture.Data.LastName = "KÜÇÜKOĞLU";
@@ -38,7 +40,7 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
     }
 
     [Fact]
-    public async void Should_ThrowException_If_FirstNameIsNull_While_CreatingCompany()
+    public async void Should_ThrowException_If_FirstNameIsNull_While_CreatingPerson()
     {
         var request = new CreatePerson
         {
@@ -51,5 +53,24 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
 
         Assert.Equal(HttpStatusCode.InternalServerError, responseMessage.StatusCode);
         Assert.Single(response!.Errors);
+    }
+
+    [Theory, Priority(2)]
+    //[InlineData(ContactTypes.EmailAddress, "ahmetkucukoglu@gmail.com")]
+    //[InlineData(ContactTypes.PhoneNumber, "5413456787")]
+    [InlineData(ContactTypes.Location, "İstanbul")]
+    public async void Should_ReturnSuccess_When_AddContact(ContactTypes type, string value)
+    {
+        var request = new AddContact
+        {
+            PersonId = _fixture.Data.PersonId,
+            Type = type,
+            Value = value
+        };
+        var responseMessage = await _fixture.HttpClient.PutAsJsonAsync($"api/Persons/{_fixture.Data.PersonId}/contacts", request);
+
+        responseMessage.EnsureSuccessStatusCode();
+
+        var response = await responseMessage.Content.ReadFromJsonAsync<AddContactResponse>();
     }
 }
