@@ -13,19 +13,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\..\..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\ContactApp.Shared\ContactApp.Shared.csproj" />
-      <ProjectReference Include="..\ContactApp.Company.Application\ContactApp.Company.Application.csproj" />
-      <ProjectReference Include="..\ContactApp.Company.Infrastructure\ContactApp.Company.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\ContactApp.Shared\ContactApp.Shared.csproj" />
+        <ProjectReference Include="..\ContactApp.Person.Application\ContactApp.Person.Application.csproj" />
+        <ProjectReference Include="..\ContactApp.Person.Infrastructure\ContactApp.Person.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="ContactApp.Company.Tests" />
+        <InternalsVisibleTo Include="ContactApp.Person.Tests" />
     </ItemGroup>
 
 </Project>
