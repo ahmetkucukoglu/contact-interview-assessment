@@ -65,7 +65,6 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
     {
         var request = new AddContact
         {
-            PersonId = _fixture.Data.PersonId,
             Type = type,
             Value = value
         };

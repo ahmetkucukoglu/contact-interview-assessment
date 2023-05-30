@@ -1,5 +1,6 @@
 using ContactApp.Gateway.Middlewares;
 using ContactApp.Gateway.Services.Company;
+using ContactApp.Gateway.Services.Person;
 
 namespace ContactApp.Gateway;
 
@@ -14,8 +15,10 @@ public static class ServiceCollectionExtensions
             o.DescribeAllParametersInCamelCase();
         });
         serviceCollection.AddApiExceptionHandler();
-        
-        serviceCollection.AddCompanies(configuration);
+
+        serviceCollection
+            .AddCompanies(configuration)
+            .AddPersons(configuration);
     }
     
     public static void UseApi(this WebApplication app)

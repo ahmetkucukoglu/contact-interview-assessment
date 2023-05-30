@@ -54,9 +54,12 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPut("{id:guid}/contacts")]
-    public async Task<AddContactResponse> AddContact(AddContact request, CancellationToken cancellationToken)
+    public async Task<AddContactResponse> AddContact(Guid id, AddContact request, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(request, cancellationToken);
+        var response = await _mediator.Send(request with
+        {
+            PersonId = id
+        }, cancellationToken);
 
         return response;
     }
