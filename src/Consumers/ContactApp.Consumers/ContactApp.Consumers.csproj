@@ -14,6 +14,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Services\Person\ContactApp.Person.Application\ContactApp.Person.Application.csproj" />
+        <ProjectReference Include="..\..\Services\Report\ContactApp.Report.Application\ContactApp.Report.Application.csproj" />
+        <ProjectReference Include="..\..\Services\Report\ContactApp.Report.Infrastructure\ContactApp.Report.Infrastructure.csproj" />
         <ProjectReference Include="..\..\Shared\ContactApp.Shared\ContactApp.Shared.csproj" />
     </ItemGroup>
 

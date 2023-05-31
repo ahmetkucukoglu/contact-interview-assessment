@@ -23,8 +23,8 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddDefaultCorrelationId();
 
         serviceCollection
-            .AddInfrastructure(configuration)
-            .AddApplication()
+            .AddReportInfrastructure(configuration)
+            .AddReportApplication()
             .AddMongoDbTransaction()
             .AddMongoDbSerializers()
             .AddOutbox(configuration);

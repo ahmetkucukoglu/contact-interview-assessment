@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ContactApp.Report.Application.Commands.CreateReport;
 
-public record CreateReport : IRequest<CreateReportResponse>;
+public record CreateReport(string CorrelationId) : IRequest<CreateReportResponse>;
 
 public record CreateReportResponse
 {

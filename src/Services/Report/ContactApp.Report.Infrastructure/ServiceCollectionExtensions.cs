@@ -7,7 +7,7 @@ namespace ContactApp.Report.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection,
+    public static IServiceCollection AddReportInfrastructure(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
         serviceCollection

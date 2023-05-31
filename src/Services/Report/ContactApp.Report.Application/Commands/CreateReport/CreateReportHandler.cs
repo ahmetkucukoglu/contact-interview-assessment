@@ -1,9 +1,7 @@
 using ContactApp.Report.Domain.Repositories;
 using ContactApp.Shared.Events;
-using ContactApp.Shared.MongoDb;
 using ContactApp.Shared.MongoDb.Transaction;
 using ContactApp.Shared.Outbox;
-using CorrelationId.Abstractions;
 using MediatR;
 
 namespace ContactApp.Report.Application.Commands.CreateReport;
@@ -13,18 +11,15 @@ public class CreateReportHandler : IRequestHandler<CreateReport, CreateReportRes
     private readonly IReportRepository _reportRepository;
     private readonly IOutboxRepository _outboxRepository;
     private readonly ITransactionManagement _transactionManagement;
-    private readonly ICorrelationContextAccessor _correlationContextAccessor;
 
     public CreateReportHandler(
         IReportRepository reportRepository,
         IOutboxRepository outboxRepository,
-        ITransactionManagement transactionManagement,
-        ICorrelationContextAccessor correlationContextAccessor)
+        ITransactionManagement transactionManagement)
     {
         _reportRepository = reportRepository;
         _outboxRepository = outboxRepository;
         _transactionManagement = transactionManagement;
-        _correlationContextAccessor = correlationContextAccessor;
     }
 
     public async Task<CreateReportResponse> Handle(CreateReport request, CancellationToken cancellationToken)
@@ -40,8 +35,8 @@ public class CreateReportHandler : IRequestHandler<CreateReport, CreateReportRes
         {
             await _reportRepository.Create(report, cancellationToken);
             await _outboxRepository.Create(
-                new OutboxMessage(_correlationContextAccessor.CorrelationContext.CorrelationId,
-                    new CreatedReport(report.Id.Value)),
+                new OutboxMessage(request.CorrelationId,
+                    new CreatedReport(report.Id.Value) {CorrelationId = Guid.Parse(request.CorrelationId)}),
                 cancellationToken);
         }, cancellationToken);
 

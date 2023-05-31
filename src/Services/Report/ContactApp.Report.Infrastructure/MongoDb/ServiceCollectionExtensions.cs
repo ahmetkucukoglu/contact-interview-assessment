@@ -18,7 +18,11 @@ public static class ServiceCollectionExtensions
 
         BsonSerializer.RegisterSerializer(new ReportIdSerializer(stringSerializer));
         
-        BsonClassMap.RegisterClassMap<Domain.Aggregates.Report>(map => { map.AutoMap(); });
+        BsonClassMap.RegisterClassMap<Domain.Aggregates.Report>(map =>
+        {
+            map.AutoMap();
+            map.MapField("Data");
+        });
 
         return serviceCollection;
     }

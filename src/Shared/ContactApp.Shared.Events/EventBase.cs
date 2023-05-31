@@ -1,3 +1,6 @@
 namespace ContactApp.Shared.Events;
 
-public record EventBase;
+public record class EventBase
+{
+    public Guid CorrelationId { get; set; }
+}

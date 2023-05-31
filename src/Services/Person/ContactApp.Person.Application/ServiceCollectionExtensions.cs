@@ -5,8 +5,10 @@ namespace ContactApp.Person.Application;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddApplication(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddPersonApplication(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreatePerson).Assembly));
+
+        return serviceCollection;
     }
 }

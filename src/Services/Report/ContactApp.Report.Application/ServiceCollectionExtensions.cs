@@ -5,7 +5,7 @@ namespace ContactApp.Report.Application;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddReportApplication(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateReport).Assembly));
 

@@ -7,7 +7,7 @@ namespace ContactApp.Person.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection,
+    public static IServiceCollection AddPersonInfrastructure(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
         serviceCollection

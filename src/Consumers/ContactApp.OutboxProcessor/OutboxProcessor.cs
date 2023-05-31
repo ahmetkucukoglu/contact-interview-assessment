@@ -1,4 +1,5 @@
 using System.Text.Json;
+using ContactApp.Shared.Events;
 using ContactApp.Shared.Outbox;
 using MassTransit;
 
