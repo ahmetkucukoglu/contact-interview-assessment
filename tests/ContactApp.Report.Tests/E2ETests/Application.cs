@@ -7,7 +7,7 @@ namespace ContactApp.Report.Tests.E2ETests;
 class Application : WebApplicationFactory<Program>
 {
     public string ConnectionString { get; } = "mongodb://wSvTgSPx4YNhrSyP:heF2wk4JysLWT5h3@localhost:2244/";
-    public string DatabaseName { get; } = $"company-tdd-{Guid.NewGuid()}";
+    public string DatabaseName { get; } = $"report-tdd-{Guid.NewGuid()}";
 
     protected override IHost CreateHost(IHostBuilder builder)
     {

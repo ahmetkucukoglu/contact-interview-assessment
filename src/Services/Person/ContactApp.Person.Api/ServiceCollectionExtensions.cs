@@ -1,6 +1,7 @@
 using ContactApp.Person.Application;
 using ContactApp.Person.Infrastructure;
 using ContactApp.Shared.Middlewares;
+using ContactApp.Shared.MongoDb.Serializers;
 
 namespace ContactApp.Person.Api;
 
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddGlobalExceptionHandler();
 
         serviceCollection
+            .AddMongoDbSerializers()
             .AddInfrastructure(configuration)
             .AddApplication();
     }

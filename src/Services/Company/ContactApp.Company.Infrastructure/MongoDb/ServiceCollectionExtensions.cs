@@ -13,7 +13,6 @@ public static class ServiceCollectionExtensions
         var stringSerializer = BsonSerializer.SerializerRegistry.GetSerializer<string>();
 
         BsonSerializer.RegisterSerializer(new CompanyIdSerializer(stringSerializer));
-        BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(stringSerializer));
         
         BsonClassMap.RegisterClassMap<Domain.Aggregates.Company>(map => map.AutoMap());
 
