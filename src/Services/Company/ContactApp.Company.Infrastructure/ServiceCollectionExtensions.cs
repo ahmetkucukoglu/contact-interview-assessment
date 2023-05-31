@@ -7,7 +7,7 @@ namespace ContactApp.Company.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection,
+    public static IServiceCollection AddCompanyInfrastructure(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
         serviceCollection

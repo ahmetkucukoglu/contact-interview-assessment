@@ -5,7 +5,7 @@ namespace ContactApp.Company.Application;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddApplication(this IServiceCollection serviceCollection)
+    public static void AddCompanyApplication(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCompany).Assembly));
     }

@@ -20,8 +20,8 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddMongoDbSerializers()
-            .AddInfrastructure(configuration)
-            .AddApplication();
+            .AddCompanyInfrastructure(configuration)
+            .AddCompanyApplication();
     }
     
     public static void UseApi(this WebApplication app)
