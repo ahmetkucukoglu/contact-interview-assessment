@@ -6,6 +6,7 @@ using MongoDB.Driver;
 namespace ContactApp.Person.Infrastructure.Repositories;
 
 public record GetReport(List<GetReportData> Data);
+
 public record GetReportData(string Location, int TotalPerson, int TotalPhoneNumber);
 
 public class LocationReportRepository
@@ -90,7 +91,9 @@ public class LocationReportRepository
                     {"Location", "$_id.Location"}
                 }),
             new BsonDocument("$project",
-                new BsonDocument("_id", false))
+                new BsonDocument("_id", false)),
+            new BsonDocument("$sort",
+                new BsonDocument("Location", 1))
         };
 
         var cursor = await _collection.AggregateAsync(pipeline, cancellationToken: cancellationToken);
