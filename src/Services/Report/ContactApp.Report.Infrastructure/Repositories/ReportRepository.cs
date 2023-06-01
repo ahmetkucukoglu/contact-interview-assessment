@@ -37,7 +37,8 @@ public class ReportRepository : IReportRepository
         var filter = Builders<Domain.Aggregates.Report>.Filter.Eq(p => p.Id, report.Id);
 
         var update = Builders<Domain.Aggregates.Report>.Update
-            .Set(p => p.ModifiedAt, DateTimeOffset.Now)
+            .Set(p => p.ModifiedAt, report.ModifiedAt)
+            .Set(p => p.Status, report.Status)
             .Set("Data", report.GetData().ToList());
 
         await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
