@@ -2,12 +2,14 @@ using ContactApp.Gateway.Middlewares;
 using ContactApp.Gateway.Services.Company;
 using ContactApp.Gateway.Services.Person;
 using ContactApp.Gateway.Services.Report;
+using CorrelationId;
+using CorrelationId.DependencyInjection;
 
 namespace ContactApp.Gateway;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddApi(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void AddGatewayApi(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection.AddControllers();
         serviceCollection.AddEndpointsApiExplorer();
@@ -16,14 +18,16 @@ public static class ServiceCollectionExtensions
             o.DescribeAllParametersInCamelCase();
         });
         serviceCollection.AddApiExceptionHandler();
+        serviceCollection.AddDefaultCorrelationId();
 
         serviceCollection
+            .AddRefitHeaderHandler()
             .AddCompanies(configuration)
             .AddPersons(configuration)
             .AddReports(configuration);
     }
     
-    public static void UseApi(this WebApplication app)
+    public static void UseGatewayApi(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {
@@ -31,6 +35,7 @@ public static class ServiceCollectionExtensions
             app.UseSwaggerUI();
         }
 
+        app.UseCorrelationId();
         app.UseApiExceptionHandler();
         app.UseHttpsRedirection();
         app.UseAuthorization();

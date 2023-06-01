@@ -1,3 +1,4 @@
+using ContactApp.Gateway.Middlewares;
 using Refit;
 
 namespace ContactApp.Gateway.Services.Person;
@@ -8,7 +9,8 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddRefitClient<IPersonApi>()
             .ConfigureHttpClient(c =>
-                c.BaseAddress = new Uri(configuration.GetRequiredSection("Services:PersonBaseUri").Value!));
+                c.BaseAddress = new Uri(configuration.GetRequiredSection("Services:PersonBaseUri").Value!))
+            .AddHttpMessageHandler<RefitHeaderHandler>();
 
         return serviceCollection;
     }

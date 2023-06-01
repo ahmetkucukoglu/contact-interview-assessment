@@ -11,7 +11,7 @@ namespace ContactApp.Report.Api;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddApi(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void AddReportApi(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection.AddControllers();
         serviceCollection.AddEndpointsApiExplorer();
@@ -19,10 +19,10 @@ public static class ServiceCollectionExtensions
         {
             o.DescribeAllParametersInCamelCase();
         });
-        serviceCollection.AddGlobalExceptionHandler();
         serviceCollection.AddDefaultCorrelationId();
 
         serviceCollection
+            .AddGlobalExceptionHandler()
             .AddReportInfrastructure(configuration)
             .AddReportApplication()
             .AddMongoDbTransaction()
@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
             .AddOutbox(configuration);
     }
     
-    public static void UseApi(this WebApplication app)
+    public static void UseReportApi(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {

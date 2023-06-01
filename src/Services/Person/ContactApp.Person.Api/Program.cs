@@ -2,9 +2,9 @@ using ContactApp.Person.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApi(builder.Configuration);
+builder.Services.AddPersonApi(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseApi();
+app.UsePersonApi();
 app.Run();

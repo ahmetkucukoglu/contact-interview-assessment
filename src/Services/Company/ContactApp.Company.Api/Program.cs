@@ -2,9 +2,9 @@ using ContactApp.Company.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApi(builder.Configuration);
+builder.Services.AddCompanyApi(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseApi();
+app.UseCompanyApi();
 app.Run();

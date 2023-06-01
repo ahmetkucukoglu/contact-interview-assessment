@@ -1,3 +1,4 @@
+using ContactApp.Gateway.Middlewares;
 using Refit;
 
 namespace ContactApp.Gateway.Services.Report;
@@ -8,7 +9,8 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddRefitClient<IReportApi>()
             .ConfigureHttpClient(c =>
-                c.BaseAddress = new Uri(configuration.GetRequiredSection("Services:ReportBaseUri").Value!));
+                c.BaseAddress = new Uri(configuration.GetRequiredSection("Services:ReportBaseUri").Value!))
+            .AddHttpMessageHandler<RefitHeaderHandler>();
 
         return serviceCollection;
     }
