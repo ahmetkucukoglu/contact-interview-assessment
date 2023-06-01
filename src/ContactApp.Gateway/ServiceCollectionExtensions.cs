@@ -1,6 +1,7 @@
 using ContactApp.Gateway.Middlewares;
 using ContactApp.Gateway.Services.Company;
 using ContactApp.Gateway.Services.Person;
+using ContactApp.Gateway.Services.Report;
 
 namespace ContactApp.Gateway;
 
@@ -18,7 +19,8 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddCompanies(configuration)
-            .AddPersons(configuration);
+            .AddPersons(configuration)
+            .AddReports(configuration);
     }
     
     public static void UseApi(this WebApplication app)
