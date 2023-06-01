@@ -1,4 +1,4 @@
-namespace ContactApp.Gateway.Services.Report;
+namespace ContactApp.Shared.HttpServices.Report;
 
 public record GetReports(int Page = 1, int Size = 10);
 

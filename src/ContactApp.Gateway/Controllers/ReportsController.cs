@@ -1,4 +1,4 @@
-using ContactApp.Gateway.Services.Report;
+using ContactApp.Shared.HttpServices.Report;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactApp.Gateway.Controllers;

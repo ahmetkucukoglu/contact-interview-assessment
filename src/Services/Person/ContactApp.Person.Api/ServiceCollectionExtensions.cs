@@ -2,6 +2,8 @@ using ContactApp.Person.Application;
 using ContactApp.Person.Infrastructure;
 using ContactApp.Shared.Middlewares;
 using ContactApp.Shared.MongoDb.Serializers;
+using ContactApp.Shared.HttpServices.Company;
+using ContactApp.Shared.HttpServices.Middlewares;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 
@@ -21,9 +23,11 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddGlobalExceptionHandler()
+            .AddRefitHeaderHandler()
             .AddMongoDbSerializers()
             .AddPersonInfrastructure(configuration)
-            .AddPersonApplication();
+            .AddPersonApplication()
+            .AddCompanyHttpService(configuration);
     }
     
     public static void UsePersonApi(this WebApplication app)

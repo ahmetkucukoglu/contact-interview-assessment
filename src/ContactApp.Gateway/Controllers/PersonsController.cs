@@ -1,4 +1,4 @@
-using ContactApp.Gateway.Services.Person;
+using ContactApp.Shared.HttpServices.Person;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactApp.Gateway.Controllers;

@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\ContactApp.Shared.HttpServices\ContactApp.Shared.HttpServices.csproj" />
         <ProjectReference Include="..\..\..\Shared\ContactApp.Shared\ContactApp.Shared.csproj" />
         <ProjectReference Include="..\ContactApp.Report.Application\ContactApp.Report.Application.csproj" />
         <ProjectReference Include="..\ContactApp.Report.Infrastructure\ContactApp.Report.Infrastructure.csproj" />

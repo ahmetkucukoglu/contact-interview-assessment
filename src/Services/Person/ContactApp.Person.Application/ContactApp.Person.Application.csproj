@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\ContactApp.Shared.HttpServices\ContactApp.Shared.HttpServices.csproj" />
         <ProjectReference Include="..\ContactApp.Person.Domain\ContactApp.Person.Domain.csproj" />
         <ProjectReference Include="..\ContactApp.Person.Infrastructure\ContactApp.Person.Infrastructure.csproj" />
     </ItemGroup>

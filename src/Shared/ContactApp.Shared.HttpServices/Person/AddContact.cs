@@ -1,4 +1,4 @@
-namespace ContactApp.Gateway.Services.Person;
+namespace ContactApp.Shared.HttpServices.Person;
 
 public record AddContact
 {

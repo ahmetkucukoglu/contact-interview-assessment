@@ -1,6 +1,6 @@
 using CorrelationId.Abstractions;
 
-namespace ContactApp.Gateway.Middlewares;
+namespace ContactApp.Shared.HttpServices.Middlewares;
 
 public class RefitHeaderHandler : DelegatingHandler
 {

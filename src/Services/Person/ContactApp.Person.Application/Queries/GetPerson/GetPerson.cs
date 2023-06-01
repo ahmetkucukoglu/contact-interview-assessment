@@ -11,6 +11,7 @@ public record GetPersonResponse
     public string FirstName { get; init; }
     public string LastName { get; init; }
     public Guid CompanyId { get; init; }
+    public string CompanyName { get; init; }
     public IEnumerable<GetPersonContact> Contacts { get; init; }
 }
 

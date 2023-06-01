@@ -1,7 +1,8 @@
 using ContactApp.Gateway.Middlewares;
-using ContactApp.Gateway.Services.Company;
-using ContactApp.Gateway.Services.Person;
-using ContactApp.Gateway.Services.Report;
+using ContactApp.Shared.HttpServices.Company;
+using ContactApp.Shared.HttpServices.Middlewares;
+using ContactApp.Shared.HttpServices.Person;
+using ContactApp.Shared.HttpServices.Report;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 
@@ -22,9 +23,9 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddRefitHeaderHandler()
-            .AddCompanies(configuration)
-            .AddPersons(configuration)
-            .AddReports(configuration);
+            .AddCompanyHttpService(configuration)
+            .AddPersonHttpService(configuration)
+            .AddReportHttpService(configuration);
     }
     
     public static void UseGatewayApi(this WebApplication app)

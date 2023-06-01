@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactApp.Consumers", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactApp.Report.Tests", "tests\ContactApp.Report.Tests\ContactApp.Report.Tests.csproj", "{296A62E3-198B-4760-A5B7-9630B6BBD4C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactApp.Shared.HttpServices", "src\Shared\ContactApp.Shared.HttpServices\ContactApp.Shared.HttpServices.csproj", "{D5C3688F-E3B9-43D4-A1D1-EAE7F8078C5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,7 @@ Global
 		{F63E0BD3-3D64-4B2D-921A-9078FC6AFEDB} = {788309BB-FB03-47C1-8A26-63F6E86BF489}
 		{39F06E70-FBE8-4E5C-B3B1-4D418796EC8E} = {788309BB-FB03-47C1-8A26-63F6E86BF489}
 		{296A62E3-198B-4760-A5B7-9630B6BBD4C5} = {2422CB74-7617-4EF3-988F-578D86AE2C34}
+		{D5C3688F-E3B9-43D4-A1D1-EAE7F8078C5D} = {CC46FE69-DD0F-4188-9629-9253D978476E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0EF2EB7C-1799-42AF-8848-E3466D5C3835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -177,5 +180,9 @@ Global
 		{296A62E3-198B-4760-A5B7-9630B6BBD4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{296A62E3-198B-4760-A5B7-9630B6BBD4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{296A62E3-198B-4760-A5B7-9630B6BBD4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5C3688F-E3B9-43D4-A1D1-EAE7F8078C5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5C3688F-E3B9-43D4-A1D1-EAE7F8078C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5C3688F-E3B9-43D4-A1D1-EAE7F8078C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5C3688F-E3B9-43D4-A1D1-EAE7F8078C5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

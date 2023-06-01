@@ -4,6 +4,7 @@ using ContactApp.Shared.Middlewares;
 using ContactApp.Shared.MongoDb.Serializers;
 using ContactApp.Shared.MongoDb.Transaction;
 using ContactApp.Shared.Outbox;
+using ContactApp.Shared.HttpServices.Middlewares;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 

@@ -1,4 +1,4 @@
-namespace ContactApp.Gateway.Services.Company;
+namespace ContactApp.Shared.HttpServices.Company;
 
 public record GetCompanies;
 public record GetCompaniesResponse(IEnumerable<GetCompaniesData> Companies);

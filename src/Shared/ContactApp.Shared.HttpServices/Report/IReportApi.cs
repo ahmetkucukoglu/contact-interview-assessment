@@ -1,6 +1,6 @@
 using Refit;
 
-namespace ContactApp.Gateway.Services.Report;
+namespace ContactApp.Shared.HttpServices.Report;
 
 public interface IReportApi
 {

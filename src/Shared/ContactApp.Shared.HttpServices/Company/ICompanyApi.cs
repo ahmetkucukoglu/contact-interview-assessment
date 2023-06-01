@@ -1,6 +1,6 @@
 using Refit;
 
-namespace ContactApp.Gateway.Services.Company;
+namespace ContactApp.Shared.HttpServices.Company;
 
 public interface ICompanyApi
 {

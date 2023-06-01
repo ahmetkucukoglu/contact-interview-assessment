@@ -29,4 +29,8 @@
       <None Remove="Properties\launchSettings.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Shared\ContactApp.Shared.HttpServices\ContactApp.Shared.HttpServices.csproj" />
+    </ItemGroup>
+
 </Project>

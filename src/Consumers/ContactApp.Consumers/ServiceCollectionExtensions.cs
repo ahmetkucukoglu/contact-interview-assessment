@@ -3,6 +3,7 @@ using ContactApp.Person.Application;
 using ContactApp.Person.Infrastructure;
 using ContactApp.Report.Application;
 using ContactApp.Report.Infrastructure;
+using ContactApp.Shared.HttpServices.Company;
 using ContactApp.Shared.MongoDb.Serializers;
 using ContactApp.Shared.MongoDb.Transaction;
 using ContactApp.Shared.Outbox;
@@ -50,6 +51,7 @@ public static class ServiceCollectionExtensions
             .AddPersonInfrastructure(configuration)
             .AddReportInfrastructure(configuration)
             .AddPersonApplication()
-            .AddReportApplication();
+            .AddReportApplication()
+            .AddCompanyHttpService(configuration);
     }
 }
