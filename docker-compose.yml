@@ -1,0 +1,50 @@
+version: '3.6'
+
+services:
+  mongodb:
+    image: mongo
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+
+  gateway:
+    image: ${DOCKER_REGISTRY-}gateway
+    build:
+      context: .
+      dockerfile: src/ContactApp.Gateway/Dockerfile
+
+  company_api:
+    image: ${DOCKER_REGISTRY-}company.api
+    build:
+      context: .
+      dockerfile: src/Services/Company/ContactApp.Company.Api/Dockerfile
+
+  person_api:
+    image: ${DOCKER_REGISTRY-}person.api
+    build:
+      context: .
+      dockerfile: src/Services/Person/ContactApp.Person.Api/Dockerfile
+  
+  report_api:
+    image: ${DOCKER_REGISTRY-}report.api
+    build:
+      context: .
+      dockerfile: src/Services/Report/ContactApp.Report.Api/Dockerfile
+
+  outbox_processor:
+    image: ${DOCKER_REGISTRY-}outbox.processor
+    build:
+      context: .
+      dockerfile: src/Consumers/ContactApp.OutboxProcessor/Dockerfile
+
+  consumers:
+    image: ${DOCKER_REGISTRY-}consumers
+    build:
+      context: .
+      dockerfile: src/Consumers/ContactApp.Consumers/Dockerfile
+
+volumes:
+  contact_mongodb:
+    name: contact_mongodb
+  contact_mongo_configdb:
+    name: contact_mongo_configdb

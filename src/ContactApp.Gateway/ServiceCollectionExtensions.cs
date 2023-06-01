@@ -14,10 +14,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddControllers();
         serviceCollection.AddEndpointsApiExplorer();
-        serviceCollection.AddSwaggerGen(o =>
-        {
-            o.DescribeAllParametersInCamelCase();
-        });
+        serviceCollection.AddSwaggerGen(o => { o.DescribeAllParametersInCamelCase(); });
         serviceCollection.AddApiExceptionHandler();
         serviceCollection.AddDefaultCorrelationId();
 
@@ -27,14 +24,11 @@ public static class ServiceCollectionExtensions
             .AddPersonHttpService(configuration)
             .AddReportHttpService(configuration);
     }
-    
+
     public static void UseGatewayApi(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         app.UseCorrelationId();
         app.UseApiExceptionHandler();
