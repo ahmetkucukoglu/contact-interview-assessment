@@ -9,8 +9,6 @@ services:
     volumes:
       - contact_mongodb:/data/db
       - contact_mongo_configdb:/data/configdb
-    ports:
-      - 2246:27017
   
   rabbitmq:
     container_name: contact_rabbitmq
@@ -18,9 +16,6 @@ services:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
     restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"
   
   gateway:
     container_name: contact_gateway
@@ -43,8 +38,6 @@ services:
       Services__ReportBaseUri: http://contact_report_api/api
     depends_on:
       - mongodb
-    ports:
-      - "6020:80"
 
   person_api:
     container_name: contact_person_api
@@ -57,8 +50,6 @@ services:
       Services__ReportBaseUri: http://contact_report_api/api
     depends_on:
       - mongodb
-    ports:
-      - "6030:80"
   
   report_api:
     container_name: contact_report_api
@@ -72,8 +63,6 @@ services:
       Services__ReportBaseUri: http://contact_report_api/api
     depends_on:
       - mongodb
-    ports:
-      - "6040:80"
 
   outbox_processor:
     container_name: contact_outbox_processor
@@ -86,8 +75,6 @@ services:
       RabbitMqSettings__Password: ${RABBITMQ_PASSWORD}
     depends_on:
       - rabbitmq
-    ports:
-      - "6050:80"
 
   consumers:
     container_name: contact_consumers
@@ -101,5 +88,3 @@ services:
       RabbitMqSettings__Password: ${RABBITMQ_PASSWORD}
     depends_on:
       - rabbitmq
-    ports:
-      - "6060:80"
