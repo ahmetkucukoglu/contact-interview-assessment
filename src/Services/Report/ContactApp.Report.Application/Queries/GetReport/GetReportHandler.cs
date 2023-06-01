@@ -3,7 +3,7 @@ using ContactApp.Report.Domain.Repositories;
 using ContactApp.Shared.Abstractions.DDD;
 using MediatR;
 
-namespace ContactApp.Report.Application.Queries;
+namespace ContactApp.Report.Application.Queries.GetReport;
 
 public class GetReportHandler : IRequestHandler<GetReport, GetReportResponse>
 {

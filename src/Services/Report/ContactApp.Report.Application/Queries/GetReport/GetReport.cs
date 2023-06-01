@@ -1,7 +1,7 @@
 using ContactApp.Report.Domain.Aggregates;
 using MediatR;
 
-namespace ContactApp.Report.Application.Queries;
+namespace ContactApp.Report.Application.Queries.GetReport;
 
 public record GetReport(Guid Id) : IRequest<GetReportResponse>;
 

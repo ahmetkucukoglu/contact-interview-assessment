@@ -1,5 +1,7 @@
 using ContactApp.Report.Application.Commands.CreateReport;
 using ContactApp.Report.Application.Queries;
+using ContactApp.Report.Application.Queries.GetReport;
+using ContactApp.Report.Application.Queries.GetReports;
 using CorrelationId.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +33,14 @@ public class ReportsController : ControllerBase
 
     [HttpGet("{id:guid}")]
     public async Task<GetReportResponse> Get([FromRoute] GetReport request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(request, cancellationToken);
+
+        return response;
+    }
+
+    [HttpGet]
+    public async Task<GetReportsResponse> Get([FromQuery] GetReports request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
 

@@ -43,4 +43,22 @@ public class ReportRepository : IReportRepository
 
         await _collection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }
+    
+    public async Task<(int Count, List<Domain.Aggregates.Report>)> GetAll(int page, int size,
+        CancellationToken cancellationToken)
+    {
+        var filter = Builders<Domain.Aggregates.Report>.Filter.Eq(p => p.IsDeleted, false);
+
+        var count = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+        var skip = page == 1 ? 0 : (page - 1) * size;
+
+        var cursor = await _collection.FindAsync(filter, new FindOptions<Domain.Aggregates.Report>
+        {
+            Sort = Builders<Domain.Aggregates.Report>.Sort.Descending(p => p.ModifiedAt),
+            Skip = skip,
+            Limit = size
+        }, cancellationToken: cancellationToken);
+
+        return ((int) count, await cursor.ToListAsync(cancellationToken));
+    }
 }

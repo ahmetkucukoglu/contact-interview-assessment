@@ -2,7 +2,8 @@ using System.Net;
 using System.Net.Http.Json;
 using ContactApp.Report.Application.Commands.AddReportData;
 using ContactApp.Report.Application.Commands.CreateReport;
-using ContactApp.Report.Application.Queries;
+using ContactApp.Report.Application.Queries.GetReport;
+using ContactApp.Report.Application.Queries.GetReports;
 using ContactApp.Report.Domain.Aggregates;
 using ContactApp.Shared.Middlewares;
 using Xunit.Priority;
@@ -78,4 +79,19 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
         Assert.Equal(HttpStatusCode.InternalServerError, responseMessage.StatusCode);
         Assert.Single(response!.Errors);
     }
+    
+    [Fact, Priority(4)]
+    public async void Should_ReturnReports_When_GetReports()
+    {
+        var response = await _fixture.HttpClient.GetFromJsonAsync<GetReportsResponse>("api/Reports");
+
+        Assert.NotNull(response);
+        Assert.Equal(1, response.Count);
+        Assert.Collection(response.Data, data =>
+        {
+            Assert.Equal(_fixture.Data.ReportId, data.Id);
+            Assert.Equal(ReportStatuses.Prepared, data.Status);
+        });
+    }
+
 }
