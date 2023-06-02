@@ -1,0 +1,90 @@
+version: '3.6'
+
+services:
+  mongodb:
+    container_name: contact_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    volumes:
+      - contact_mongodb:/data/db
+      - contact_mongo_configdb:/data/configdb
+  
+  rabbitmq:
+    container_name: contact_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    restart: always
+  
+  gateway:
+    container_name: contact_gateway
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      Services__CompanyBaseUri: http://contact_company_api/api
+      Services__PersonBaseUri: http://contact_person_api/api
+      Services__ReportBaseUri: http://contact_report_api/api
+    ports:
+      - "6010:80"
+
+  company_api:
+    container_name: contact_company_api
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      MongoDbSettings__ConnectionString: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb/
+      MongoDbSettings__DatabaseName: contact
+      Services__CompanyBaseUri: http://contact_company_api/api
+      Services__PersonBaseUri: http://contact_person_api/api
+      Services__ReportBaseUri: http://contact_report_api/api
+    depends_on:
+      - mongodb
+
+  person_api:
+    container_name: contact_person_api
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      MongoDbSettings__ConnectionString: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb/
+      MongoDbSettings__DatabaseName: contact
+      Services__CompanyBaseUri: http://contact_company_api/api
+      Services__PersonBaseUri: http://contact_person_api/api
+      Services__ReportBaseUri: http://contact_report_api/api
+    depends_on:
+      - mongodb
+  
+  report_api:
+    container_name: contact_report_api
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      MongoDbSettings__ConnectionString: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb/
+      MongoDbSettings__DatabaseName: contact
+      MongoDbOutboxSettings__DatabaseName: contact-outbox
+      Services__CompanyBaseUri: http://contact_company_api/api
+      Services__PersonBaseUri: http://contact_person_api/api
+      Services__ReportBaseUri: http://contact_report_api/api
+    depends_on:
+      - mongodb
+
+  outbox_processor:
+    container_name: contact_outbox_processor
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      MongoDbOutboxSettings__ConnectionString: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb/
+      MongoDbOutboxSettings__DatabaseName: contact-outbox
+      RabbitMqSettings__Host: rabbitmq
+      RabbitMqSettings__UserName: ${RABBITMQ_USERNAME}
+      RabbitMqSettings__Password: ${RABBITMQ_PASSWORD}
+    depends_on:
+      - rabbitmq
+
+  consumers:
+    container_name: contact_consumers
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      MongoDbSettings__ConnectionString: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb/
+      MongoDbSettings__DatabaseName: contact
+      MongoDbOutboxSettings__DatabaseName: contact-outbox
+      RabbitMqSettings__Host: rabbitmq
+      RabbitMqSettings__UserName: ${RABBITMQ_USERNAME}
+      RabbitMqSettings__Password: ${RABBITMQ_PASSWORD}
+    depends_on:
+      - rabbitmq
