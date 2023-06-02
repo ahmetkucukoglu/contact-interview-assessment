@@ -1,8 +1,8 @@
-using ContactApp.Gateway.Middlewares;
 using ContactApp.Shared.HttpServices.Company;
 using ContactApp.Shared.HttpServices.Middlewares;
 using ContactApp.Shared.HttpServices.Person;
 using ContactApp.Shared.HttpServices.Report;
+using ContactApp.Shared.Middlewares;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 
@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddControllers();
         serviceCollection.AddEndpointsApiExplorer();
         serviceCollection.AddSwaggerGen(o => { o.DescribeAllParametersInCamelCase(); });
-        serviceCollection.AddApiExceptionHandler();
+        serviceCollection.AddGlobalExceptionHandler();
         serviceCollection.AddDefaultCorrelationId();
 
         serviceCollection
@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
         app.UseSwaggerUI();
 
         app.UseCorrelationId();
-        app.UseApiExceptionHandler();
+        app.UseGlobalExceptionHandler();
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();

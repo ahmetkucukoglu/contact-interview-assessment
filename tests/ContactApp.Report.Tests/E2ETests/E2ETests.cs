@@ -76,7 +76,7 @@ public class E2ETests : IClassFixture<E2ETestsFixture>
         var responseMessage = await _fixture.HttpClient.GetAsync($"api/Reports/{Guid.NewGuid()}");
         var response = await responseMessage.Content.ReadFromJsonAsync<ApiErrorResponse>();
         
-        Assert.Equal(HttpStatusCode.InternalServerError, responseMessage.StatusCode);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, responseMessage.StatusCode);
         Assert.Single(response!.Errors);
     }
     

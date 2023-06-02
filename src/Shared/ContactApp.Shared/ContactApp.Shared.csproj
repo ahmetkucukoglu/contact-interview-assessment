@@ -12,9 +12,11 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
         <PackageReference Include="MongoDB.Driver" Version="2.19.2" />
+        <PackageReference Include="Refit" Version="6.3.2" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\ContactApp.Shared.Abstractions\ContactApp.Shared.Abstractions.csproj" />
         <ProjectReference Include="..\ContactApp.Shared.Events\ContactApp.Shared.Events.csproj" />
     </ItemGroup>
 
